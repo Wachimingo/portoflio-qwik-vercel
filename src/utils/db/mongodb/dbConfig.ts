@@ -1,5 +1,5 @@
 import { noSerialize } from "@builder.io/qwik";
-import { MongoClient, MongoServerError } from "mongodb";
+import { MongoClient, MongoServerError, ObjectId } from "mongodb";
 /**
  * Mongo Database
  */
@@ -18,7 +18,15 @@ class DatabaseServer {
 
     DatabaseServer._conn = client;
   }
-
+  static transformObjectIdToString(arr: any): void {
+    arr?.forEach((document: any) => {
+      Object.keys(document).forEach((key: any) => {
+        if (document[key] instanceof ObjectId) {
+          document[key] = document[key].toString();
+        }
+      });
+    });
+  }
   /**
    *Creates a new instance of the Database connection, if there is a active instance then it returns the current one
    **/
@@ -39,7 +47,8 @@ class DatabaseServer {
       const db = this._conn.db("microempresa");
       const collection = db.collection(collection_name);
       const data = await collection.find(query).project(select).limit(limit).toArray();
-      return noSerialize(data);
+      this.transformObjectIdToString(data);
+      return data;
     } catch (e: any) {
       if (e instanceof MongoServerError) {
         console.error(e);
@@ -51,21 +60,6 @@ class DatabaseServer {
       }
     }
   }
-  // static async getMultipleDocuments(queries) {
-  //   try {
-  //     await this._conn.connect();
-  //     const db = this._conn.db("microempresa");
-  //     const collection[queries[]]
-  //     // const collection = db.collection(collection_name);
-  //     // return await collection.find(query).project(select).limit(limit).toArray();
-  //   } catch (e: any) {
-  //     if (e instanceof MongoServerError) {
-  //       console.error(e);
-  //     }
-  //   } finally {
-  //     await this._conn.close();
-  //   }
-  // }
   /**
    *Execute a .find query and returns a stream
    */

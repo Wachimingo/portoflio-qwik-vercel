@@ -2,6 +2,7 @@ import { component$, Resource, useResource$, useStore } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LinkButton } from "~/components/buttons";
 import { Div, Main, Section } from "~/components/containers";
+import SkillBubble from "~/components/skills/bubble/Bubble";
 import DatabaseServer from "~/utils/db/mongodb/dbConfig";
 
 export default component$(() => {
@@ -11,22 +12,29 @@ export default component$(() => {
   const skillsStore = useStore({
     docs: undefined
   });
-
   const certsResource = useResource$(async ({ track, cleanup }) => {
     DatabaseServer.getInstance();
     track(() => certsStore.docs);
     const controller = new AbortController();
     cleanup(() => controller.abort());
-    const result = await DatabaseServer.getDocuments("certifications", { locale: "en" }, undefined, 5);
-    return result;
+    try {
+      const result = await DatabaseServer.getDocuments("certifications", { locale: "en" }, undefined, 5);
+      return result;
+    } catch (error) {
+      return error;
+    }
   });
   const skillsResource = useResource$(async ({ track, cleanup }) => {
     DatabaseServer.getInstance();
     track(() => skillsStore.docs);
     const controller = new AbortController();
     cleanup(() => controller.abort());
-    const result = await DatabaseServer.getDocuments("skills", { locale: "en" }, undefined, 5);
-    return result;
+    try {
+      const result = await DatabaseServer.getDocuments("skills", { locale: "en" }, undefined, 5);
+      return result;
+    } catch (error) {
+      return error;
+    }
   });
 
   return (
@@ -52,7 +60,11 @@ export default component$(() => {
             onRejected={() => <>Error</>}
             onResolved={(skills: any) => {
               return skills?.map((skill: any) => {
-                return <div class={"hidden"}>{skill.name}</div>;
+                return (
+                  <div class={"hidden"}>
+                    <SkillBubble skill={skill} />
+                  </div>
+                );
               });
             }}
           />
