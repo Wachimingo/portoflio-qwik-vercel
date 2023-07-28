@@ -1,4 +1,3 @@
-import { noSerialize } from "@builder.io/qwik";
 import { MongoClient, MongoServerError, ObjectId } from "mongodb";
 /**
  * Mongo Database

@@ -1,6 +1,7 @@
 import { component$, Resource, useResource$, useStore } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 import { LinkButton } from "~/components/buttons";
+import { CertCard } from "~/components/certs";
 import { Div, Main, Section } from "~/components/containers";
 import SkillBubble from "~/components/skills/bubble/Bubble";
 import DatabaseServer from "~/utils/db/mongodb/dbConfig";
@@ -72,6 +73,35 @@ export default component$(() => {
         <br />
         <br />
         <h2>And there a plenty more you can look at here:</h2>
+        <LinkButton info id='see_more_skills' link='/skills'>
+          Want to see more?
+        </LinkButton>
+      </Section>
+      <br />
+      <br />
+      <br />
+      <Section id='cert_section' extendedClassName='hidden'>
+        <h2>This is my learning path for continuos development:</h2>
+        <br />
+        <Div row>
+          <Resource
+            value={certsResource}
+            onPending={() => <>Loading...</>}
+            onRejected={() => <>Error</>}
+            onResolved={(certs: any) => {
+              return certs?.map((cert: any) => {
+                return (
+                  <div class={"hidden"}>
+                    <CertCard cert={cert} />
+                  </div>
+                );
+              });
+            }}
+          />
+        </Div>
+        <br />
+        <h2>And there a plenty more you can look at here:</h2>
+        <br />
         <LinkButton info id='see_more_skills' link='/skills'>
           Want to see more?
         </LinkButton>

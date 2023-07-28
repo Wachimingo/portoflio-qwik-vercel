@@ -1,8 +1,9 @@
-import { component$, useStylesScoped$ } from "@builder.io/qwik";
+import { component$, useStyles$ } from "@builder.io/qwik";
+import { Link } from "@builder.io/qwik-city";
 import styles from "./navbar.css?inline";
 
 const NavBar = component$(() => {
-  useStylesScoped$(styles);
+  useStyles$(styles);
   return (
     <nav class='menu'>
       <input id='menu-toggle' type='checkbox' />
@@ -12,18 +13,18 @@ const NavBar = component$(() => {
         <div class='ham-divs' />
       </label>
       <div id='menu-container' class='menu-container'>
-        <a class='menu-container-link' href='/'>
+        <Link href='/' class='menu-container-link'>
           Home
-        </a>
-        <a class='menu-container-link' href='/projects'>
+        </Link>
+        <Link class='menu-container-link' href='/projects'>
           Projects
-        </a>
-        <a class='menu-container-link' href='/skills'>
+        </Link>
+        <Link class='menu-container-link' href='/skills'>
           Skills
-        </a>
-        <a class='menu-container-link' href='/certs'>
+        </Link>
+        <Link class='menu-container-link' href='/certs'>
           Certifications
-        </a>
+        </Link>
       </div>
     </nav>
   );
