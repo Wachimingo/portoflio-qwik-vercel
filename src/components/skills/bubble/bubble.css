@@ -41,6 +41,8 @@ div[role="progressbar"]:hover::before {
   content: counter(percentage) "%";
 }
 .skill-icon {
+  width: 150px;
+  height: 150px;
   position: relative;
   top: 0.15em;
   border-radius: 100%;
