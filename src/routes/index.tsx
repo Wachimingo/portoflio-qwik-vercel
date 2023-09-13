@@ -62,7 +62,7 @@ export default component$(() => {
             onResolved={(skills: any) => {
               return skills?.map((skill: any) => {
                 return (
-                  <div class={"hidden"}>
+                  <div key={skill.name} class={"hidden"}>
                     <SkillBubble skill={skill} />
                   </div>
                 );
@@ -91,7 +91,7 @@ export default component$(() => {
             onResolved={(certs: any) => {
               return certs?.map((cert: any) => {
                 return (
-                  <div class={"hidden"}>
+                  <div key={cert.name} class={"hidden"}>
                     <CertCard cert={cert} />
                   </div>
                 );

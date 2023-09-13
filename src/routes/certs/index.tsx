@@ -36,7 +36,7 @@ export default component$(() => {
             onResolved={(certs: any) => {
               return certs?.map((cert: any) => {
                 return (
-                  <div class={"hidden"}>
+                  <div key={cert.name} class={"hidden"}>
                     <CertCard cert={cert} />
                   </div>
                 );

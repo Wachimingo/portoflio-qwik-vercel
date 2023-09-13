@@ -33,7 +33,7 @@ export default component$(() => {
             onResolved={(skills: any) => {
               return skills?.map((skill: any) => {
                 return (
-                  <div class={"hidden"}>
+                  <div key={skill.name} class={"hidden"}>
                     <SkillBubble skill={skill} />
                   </div>
                 );
