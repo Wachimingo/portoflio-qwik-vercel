@@ -1,7 +1,7 @@
 import { Slot, component$, useStylesScoped$ } from "@builder.io/qwik";
 import styles from "./button.css?inline";
 
-export const LinkButton = component$(({ children, link, info, error, success, extendedClass, ...props }: any): any => {
+export const LinkButton = component$(({ link, info, error, success, extendedClass, ...props }: any): any => {
   useStylesScoped$(styles);
   let type = "success";
   if (success) type = "success";
@@ -9,7 +9,7 @@ export const LinkButton = component$(({ children, link, info, error, success, ex
   if (error) type = "error";
 
   return (
-    <a className={`button ${type} ${extendedClass ?? ""}`} href={link} {...props}>
+    <a class={`button ${type} ${extendedClass ?? ""}`} href={link} {...props}>
       <Slot />
     </a>
   );
